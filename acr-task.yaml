@@ -1,0 +1,11 @@
+version: v1.1.0
+steps:
+  - build: >
+      -f ./Dockerfile
+      --build-arg REGISTRY={{.Values.REGISTRY}} 
+      -t {{.Run.Registry}}/nginx:stable-{{.Run.ID}}
+      -t {{.Run.Registry}}/nginx:stable
+      .
+  - push: 
+    - "{{.Run.Registry}}/nginx:stable-{{.Run.ID}}"
+    - "{{.Run.Registry}}/nginx:stable"
