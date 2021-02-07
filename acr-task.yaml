@@ -3,14 +3,18 @@ steps:
   - id: check
     cmd: bash echo prechecks
   - id: fetch
-    cmd: acr tag list --repository nginx
+    cmd: acr repository show-manifests --repository nginx --orderby time_asc --top 1 --query [].digest -o tsv
+    when: ["check"]
   - id: build
     build: >
       -f ./Dockerfile
       -t {{.Run.Registry}}/nginx:stable-{{.Run.ID}}
       -t {{.Run.Registry}}/nginx:stable
       .
+    when: ["fetch"]
   - id: push
     push: 
     - "{{.Run.Registry}}/nginx:stable-{{.Run.ID}}"
     - "{{.Run.Registry}}/nginx:stable"
+    when: ["build"]
+    
