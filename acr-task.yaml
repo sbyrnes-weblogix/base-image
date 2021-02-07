@@ -1,10 +1,16 @@
 version: v1.1.0
 steps:
-  - build: >
+  - id: check-sha-256
+      cmd: bash echo prechecks
+  - id: fetch-acr-tag-list
+      - cmd: acr tag list --registry {.Run.Registry} --repository nginx
+  - id: fetch-nginx
+      build: >
       -f ./Dockerfile
       -t {{.Run.Registry}}/nginx:stable-{{.Run.ID}}
       -t {{.Run.Registry}}/nginx:stable
       .
-  - push: 
+  - id: push-nginx
+    push: 
     - "{{.Run.Registry}}/nginx:stable-{{.Run.ID}}"
     - "{{.Run.Registry}}/nginx:stable"
