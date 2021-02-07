@@ -3,7 +3,7 @@ steps:
   - id: check-sha-256
       cmd: bash echo prechecks
   - id: fetch-acr-tag-list
-      cmd: acr tag list --registry {.Run.Registry} --repository nginx
+      cmd: acr tag list --repository nginx
   - id: fetch-nginx
       build: >
       -f ./Dockerfile
