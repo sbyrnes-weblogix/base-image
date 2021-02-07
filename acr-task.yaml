@@ -3,7 +3,7 @@ steps:
   - id: check
     cmd: bash echo prechecks
   - id: fetch
-    cmd: acr repository show-manifests --repository nginx --orderby time_asc --top 1 --query [].digest -o tsv
+    cmd: az-cli acr repository show-manifests --repository nginx --orderby time_asc --top 1 --query [].digest -o tsv
     when: ["check"]
   - id: build
     build: >
