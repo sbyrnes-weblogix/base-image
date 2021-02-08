@@ -8,13 +8,15 @@ steps:
   - id: build
     build: >
       -f ./Dockerfile
-      -t {{.Run.Registry}}/nginx:stable-{{.Run.ID}}
-      -t {{.Run.Registry}}/nginx:stable
+      --build-arg DOCKER_FROM={{.Values.DOCKER_FROM}} 
+      --build-arg DOCKER_TAG={{.Values.DOCKER_TAG}} 
+      -t {{.Run.Registry}}/nginx:{{.Values.DOCKER_TAG}}-{{.Run.ID}}
+      -t {{.Run.Registry}}/nginx:{{.Values.DOCKER_TAG}}
       .
     when: ["fetch"]
   - id: push
     push: 
-    - "{{.Run.Registry}}/nginx:stable-{{.Run.ID}}"
-    - "{{.Run.Registry}}/nginx:stable"
+    - "{{.Run.Registry}}/nginx:{{.Values.DOCKER_TAG}}-{{.Run.ID}}"
+    - "{{.Run.Registry}}/nginx:{{.Values.DOCKER_TAG}}"
     when: ["build"]
     
