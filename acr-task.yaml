@@ -1,10 +1,5 @@
 version: v1.1.0
 steps:
-  - id: check
-    cmd: bash echo prechecks
-  - id: fetch
-    cmd: mcr.microsoft.com/azure-cli acr repository show-manifests --repository nginx --orderby time_asc --top 1 --query [].digest -o tsv
-    when: ["check"]
   - id: build
     build: >
       -f ./Dockerfile
@@ -13,7 +8,6 @@ steps:
       -t {{.Run.Registry}}/nginx:{{.Values.DOCKER_TAG}}-{{.Run.ID}}
       -t {{.Run.Registry}}/nginx:{{.Values.DOCKER_TAG}}
       .
-    when: ["fetch"]
   - id: push
     push: 
     - "{{.Run.Registry}}/nginx:{{.Values.DOCKER_TAG}}-{{.Run.ID}}"
