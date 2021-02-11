@@ -5,12 +5,12 @@ steps:
       -f ./Dockerfile
       --build-arg DOCKER_FROM={{.Values.DOCKER_FROM}} 
       --build-arg DOCKER_TAG={{.Values.DOCKER_TAG}} 
-      -t {{.Run.Registry}}/{{.Values.DOCKER_FROM}}:{{.Values.DOCKER_TAG}}-{{.Run.ID}}
-      -t {{.Run.Registry}}/{{.Values.DOCKER_FROM}}:{{.Values.DOCKER_TAG}}
+      -t {{.Run.Registry}}/{{.Values.LIBRARY}}/{{.Values.DOCKER_FROM}}:{{.Values.DOCKER_TAG}}-{{.Run.ID}}
+      -t {{.Run.Registry}}/{{.Values.LIBRARY}}/{{.Values.DOCKER_FROM}}:{{.Values.DOCKER_TAG}}
       .
   - id: push
     push: 
-    - "{{.Run.Registry}}/{{.Values.DOCKER_FROM}}:{{.Values.DOCKER_TAG}}-{{.Run.ID}}"
-    - "{{.Run.Registry}}/{{.Values.DOCKER_FROM}}:{{.Values.DOCKER_TAG}}"
+    - "{{.Run.Registry}}/{{.Values.LIBRARY}}/{{.Values.DOCKER_FROM}}:{{.Values.DOCKER_TAG}}-{{.Run.ID}}"
+    - "{{.Run.Registry}}/{{.Values.LIBRARY}}/{{.Values.DOCKER_FROM}}:{{.Values.DOCKER_TAG}}"
     when: ["build"]
     
